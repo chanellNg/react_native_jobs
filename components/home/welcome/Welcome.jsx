@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Text,
@@ -12,8 +12,12 @@ import { useRouter } from 'expo-router';
 import styles from './welcome.style';
 import { icons, SIZES } from '../../../constants';
 
+const jobTypes = ["Full-time", "Part-time", "Contractor"];
+
 const Welcome = () => {
   const router = useRouter();
+  // usestate active job type so that the correct job type list element will be highlighted
+  const [activeJobType, setActiveJobType] = useState('Full-time');
 
   return (
     <View>
@@ -47,9 +51,29 @@ const Welcome = () => {
       {/* Show Jobs */}
       <View style={styles.tabsContainer}>
         {/* Use flatlist when there is more data to render */}
-        <FlatList>
-
-        </FlatList>
+        <FlatList 
+          data={jobTypes}
+          renderItem={({item}) => {
+            {/* Each list item is a button which is clickable */}
+            
+            return <TouchableOpacity
+              style={styles.tab(activeJobType, item)}
+              onPress={()=> {
+                // set active job type so that the list item will be highlighted
+                setActiveJobType(item);
+                // search function for job type
+                router.push(`/search/${item}`);
+              }}
+              >
+              <Text style={styles.tabText(activeJobType, item)}>
+                {item}
+              </Text>
+            </TouchableOpacity>
+          }}
+          keyExtractor={item => item} // extracts unique key
+          contentContainerStyle={{columnGap: SIZES.small}} // space between horizontal list elements else sidebyside
+          horizontal // layout list elements horizontally
+        />
 
       </View>
     </View>

@@ -7,7 +7,15 @@ Use [`expo-router`](https://expo.github.io/router) to build native navigation us
 ```sh
 npx create-expo-app -e with-router
 ```
+- create a new .env file using .env-example as an example
 
+## How to run
+
+- use command: 
+```sh
+npx expo start --tunnel
+```
+- connect to expo start app on mobile device by scanning QR code generated
 ## 📝 Notes
 
 - [Expo Router: Docs](https://expo.github.io/router)
